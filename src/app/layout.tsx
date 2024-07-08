@@ -7,6 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ButtonAppBar from "./ButtonAppBar";
 import CssBaseline from '@mui/material/CssBaseline';
+import DarkTheme from "./DarkTheme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppRouterCacheProvider>
-          <CssBaseline />
-          <ButtonAppBar />
-          {children}
+          <DarkTheme>
+            <CssBaseline />
+            <ButtonAppBar />
+            {children}
+          </DarkTheme>
         </AppRouterCacheProvider>
       </body>
     </html>

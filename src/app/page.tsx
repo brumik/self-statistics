@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { CheckHealthEndpoint } from './api/check-connection/route';
 
 export default function Home() {
   const [status, setStatus] = useState("Loading");
@@ -8,7 +9,7 @@ export default function Home() {
   const checkConnection = async () => {
     try {
       const response = await fetch('/api/check-connection');
-      const result = await response.json();
+      const result = await response.json() as CheckHealthEndpoint;
       setStatus(result.connected ? 'Connected to MongoDB' : `Failed to connect: ${result.error}`);
     } catch (error) {
       console.error('Error:', error);
