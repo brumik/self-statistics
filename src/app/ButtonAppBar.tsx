@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import ConnectionIndicatorButton from './ConnectionIndicatorButton';
 
 export default function ButtonAppBar() {
   return (
@@ -21,8 +22,9 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Tracking 
           </Typography>
+          <ConnectionIndicatorButton />
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
