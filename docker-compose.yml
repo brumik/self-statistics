@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.development
     container_name: web
-    restart: always
+    # restart: always
     volumes:
       - ./:/usr/src/app
     ports:
@@ -14,7 +14,7 @@ services:
   mongo:
     container_name: mongo
     image: mongo
-    restart: always
+    # restart: always
     volumes:
       - ./data:/data/db
     ports:
