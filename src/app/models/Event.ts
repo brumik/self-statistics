@@ -3,7 +3,7 @@ import  mongoose, { Schema, model } from  "mongoose";
 export interface EventConfigurationDocument {
   name: string;
   // notifications: string[];
-  fileds: Array<string | number | boolean>;
+  fields: { name: string, type: 'number' | 'text' | 'boolean' }[];
 }
 
 export interface EventDocument {

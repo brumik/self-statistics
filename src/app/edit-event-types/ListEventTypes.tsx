@@ -2,22 +2,23 @@ import Divider from "@mui/material/Divider/Divider";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
 import ListItemText from "@mui/material/ListItemText/ListItemText";
-import { EventDocument } from "./models/Event";
 import { IconButton, ListItemButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import { EventConfigurationDocument } from "../models/Event";
 
-const elements: EventDocument[] = [1, 2, 3, 4, 5].map(i => ({
-  type: 'test',
-  values: [i, i * 2],
-  createdAt: new Date(),
+const configs: EventConfigurationDocument[] = [1, 2, 3, 4, 5].map(i => ({
+  name: 'test' + i,
+  fields: [
+    { name: 'Value 1', type: 'text' },
+    { name: 'Value 2', type: 'number' },
+    { name: 'Value 1', type: 'boolean' },
+  ],
 }));
 
-export default function EventList() {
+export default function EventTypeList() {
   return (
-    <List 
-      // subheader={<Typography variant="h3" component="h3">Events</Typography>}
-    >
-      {elements.map(({ type, values, createdAt }) => (
+    <List>
+      {configs.map(({ name, fields }) => (
         <>
           <ListItem
             secondaryAction={
@@ -28,8 +29,7 @@ export default function EventList() {
           >
             <ListItemButton dense>
               <ListItemText
-                primary={`${type}: ${values?.join(', ')}`}
-                secondary={createdAt.toLocaleString()}
+                primary={`${name}: ${fields.map(e => e.name).join(', ')}`}
               />
             </ListItemButton>
           </ListItem>
