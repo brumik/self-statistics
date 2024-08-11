@@ -2,11 +2,11 @@ import Divider from "@mui/material/Divider/Divider";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
 import ListItemText from "@mui/material/ListItemText/ListItemText";
-import { EventDocument } from "./models/Event";
+import { IEvent } from "./models/Event";
 import { IconButton, ListItemButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
-const elements: EventDocument[] = [1, 2, 3, 4, 5].map(i => ({
+const elements: IEvent[] = [1, 2, 3, 4, 5].map(i => ({
   type: 'test',
   values: [i, i * 2],
   createdAt: new Date(),

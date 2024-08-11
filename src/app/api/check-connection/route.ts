@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import client from '../../../lib/mongodb';
+import { connectMongoose } from '@/lib/mongoose';
+import mongoose from 'mongoose';
 
 export interface CheckHealthEndpoint {
   connected: boolean
@@ -8,9 +9,8 @@ export interface CheckHealthEndpoint {
 
 export async function GET(): Promise<NextResponse<CheckHealthEndpoint>> {
   try {
-    const db = client.db('your_database_name');
-    await db.command({ ping: 1 });
-    return NextResponse.json({ connected: true });
+    await connectMongoose();
+    return NextResponse.json({ connected: mongoose.connection.readyState === 1 });
   } catch (error) {
     console.error('MongoDB connection error:', error);
     return NextResponse.json({ connected: false, error: (error as string) });

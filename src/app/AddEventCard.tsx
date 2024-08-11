@@ -39,9 +39,9 @@ export default function AddEventCard() {
             <Box pt={3}>
               <Typography variant="h6" component="h6" gutterBottom>Event details</Typography>
               {perTypeValues.test.map(({ label, type }) => (
-                <>
+                <div key={label}>
                   <TextField margin="dense" id={label} key={label} label={label} type={type} />{' '}
-                </>
+                </div>
               ))}
             </Box>
           </Box>
