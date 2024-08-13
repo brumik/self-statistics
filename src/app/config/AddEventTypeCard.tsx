@@ -42,7 +42,7 @@ export default function AddEventTypeCard() {
             /><br />
             {form.fields.map((item, idx) => (
               <EventValueField
-                key={item.name || idx}
+                key={idx}
                 value={item}
                 onChange={(val: IEventConfigField) => {
                   form.fields[idx] = val;
