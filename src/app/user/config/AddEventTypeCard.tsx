@@ -7,7 +7,7 @@ import { IEventConfig, IEventConfigField } from "@/lib/models/EventConfig";
 
 const save = async (data: IEventConfig) => {
   try {
-    const response = await fetch('/api/event-config', {
+    const response = await fetch('/api/event-configs', {
       method: 'POST',
       body: JSON.stringify(data)
     });

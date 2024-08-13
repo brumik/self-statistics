@@ -12,7 +12,7 @@ export default function Home() {
 
   const getData = async () => {
     try {
-      const response = await fetch('/api/event');
+      const response = await fetch('/api/events');
       const result = await response.json() as IEventHydrated[];
       result.forEach(val => val.createdAt = new Date(val.createdAt.toString()));
       setData(result);
@@ -28,7 +28,7 @@ export default function Home() {
 
   const handleDelete = async (event: IEventHydrated) => {
       try {
-        await fetch('/api/event', {
+        await fetch('/api/events', {
           method: 'DELETE',
           body: JSON.stringify(event)
         });

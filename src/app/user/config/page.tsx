@@ -14,7 +14,7 @@ export default function EditEventTypesScreen() {
 
   const getData = async () => {
     try {
-      const response = await fetch('/api/event-config');
+      const response = await fetch('/api/event-configs');
       const result = await response.json() as HydratedDocument<IEventConfig>[];
       setData(result);
     } catch (error) {
@@ -29,7 +29,7 @@ export default function EditEventTypesScreen() {
 
   const handleDelete = async (event: HydratedDocument<IEventConfig>) => {
     try {
-      await fetch('/api/event-config', {
+      await fetch('/api/event-configs', {
         method: 'DELETE',
         body: JSON.stringify(event)
       });

@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 
 const save = async (data: IEvent) => {
   try {
-    const response = await fetch('/api/event', {
+    const response = await fetch('/api/events', {
       method: 'POST',
       body: JSON.stringify(data)
     });
@@ -44,7 +44,7 @@ interface Props {
   onSave: VoidFunction;
 }
 
-interface IEventString extends Omit<IEvent, 'type'> {
+interface IEventString extends Omit<IEvent, 'type' | 'user'> {
   type: string
 }
 
@@ -58,7 +58,7 @@ export default function AddEventCard({ onSave }: Props) {
 
   const getConfig = async () => {
     try {
-      const response = await fetch('/api/event-config');
+      const response = await fetch('/api/event-configs');
       const result = await response.json() as HydratedDocument<IEventConfig>[];
       const mapped = Object.assign({},
         ...result.map(({ _id, ...rest }) => ({

@@ -4,7 +4,6 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import ButtonAppBar from "./ButtonAppBar";
 import CssBaseline from '@mui/material/CssBaseline';
 import DarkTheme from "./DarkTheme";
 
@@ -24,7 +23,6 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <DarkTheme>
             <CssBaseline />
-            <ButtonAppBar />
             {children}
           </DarkTheme>
         </AppRouterCacheProvider>

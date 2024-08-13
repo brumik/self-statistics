@@ -9,7 +9,12 @@ export interface Post extends IUser {
   rememberMe?: boolean;
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse<{} | IError>> {
+export interface LoginError {
+  username?: string;
+  password?: string;
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse<LoginError | IError>> {
   try {
     await connectMongoose();
     const { username, password, rememberMe = false } = await request.json() as Post;
@@ -18,13 +23,13 @@ export async function POST(request: NextRequest): Promise<NextResponse<{} | IErr
     const user = await User.findOne({ username });
 
     if (!user) {
-      return NextResponse.json({ description: "User does not exist" }, { status: 404 });
+      return NextResponse.json({ username: "User does not exist" }, { status: 404 });
     }
 
     //check if password is correct
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
-      return NextResponse.json({ description: "Invlid password" }, { status: 401 })
+      return NextResponse.json({ password: "Invlid password" }, { status: 401 })
     }
 
     // A JavaScript object (tokenData) is created to store essential user 

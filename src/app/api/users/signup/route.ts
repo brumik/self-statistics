@@ -8,7 +8,12 @@ export interface ISignupSuccess {
   message: string;
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse<ISignupSuccess | IError>> {
+export interface SignUpError {
+  username?: string;
+  password?: string;
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse<ISignupSuccess | SignUpError | IError>> {
   try {
     await connectMongoose();
     const { username, password } = await request.json();
@@ -16,7 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ISignupSu
     const user = await User.findOne({ username });
 
     if (user) {
-      return NextResponse.json({ error: {}, description: "User already exists" }, { status: 400 });
+      return NextResponse.json({ username: "User already exists" }, { status: 400 });
     }
 
     const salt = await bcryptjs.genSalt(10);
