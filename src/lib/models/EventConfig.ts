@@ -1,13 +1,19 @@
-import { Schema, model, models } from "mongoose";
+import { HydratedDocument, ObjectId, Schema, model, models } from "mongoose";
+import { IUser } from "./User";
 
 export interface IEventConfigField {
-  name: string,
-  type: 'number' | 'string' | 'boolean'
+  name: string;
+  type: 'number' | 'string' | 'boolean';
 }
 
 export interface IEventConfig {
   name: string;
   fields: IEventConfigField[];
+  user: ObjectId | IUser;
+}
+
+export interface IEventConfigHydrated extends HydratedDocument<IEventConfig> {
+  user: ObjectId;
 }
 
 const eventConfigSchema = new Schema<IEventConfig>({
@@ -19,8 +25,7 @@ const eventConfigSchema = new Schema<IEventConfig>({
     }],
     required: true
   },
-}, {
-  statics: {}
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 // To avoid double lod the model we need to check first if it exists
