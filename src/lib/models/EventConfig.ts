@@ -19,6 +19,8 @@ const eventConfigSchema = new Schema<IEventConfig>({
     }],
     required: true
   },
+}, {
+  statics: {}
 });
 
 // To avoid double lod the model we need to check first if it exists

@@ -1,19 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { connectMongoose } from '@/lib/mongoose';
 import { IError } from '../Types';
 import { EventConfig, IEventConfig } from '@/lib/models/EventConfig';
+import { HydratedDocument } from 'mongoose';
 
-export async function GET(): Promise<NextResponse<IEventConfig[] | IError>> {
+export async function GET(): Promise<NextResponse<HydratedDocument<IEventConfig>[] | IError>> {
   try {
     await connectMongoose();
-    const data = await EventConfig.find();
+    // Sort by newest first
+    const data = (await EventConfig.find()).reverse();
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error, description: 'Something went wrong' });
   }
 }
 
-export async function POST(req: Request): Promise<NextResponse<IEventConfig | IError>> {
+export async function POST(req: NextRequest): Promise<NextResponse<HydratedDocument<IEventConfig> | IError>> {
   try {
     await connectMongoose();
     const entry = await req.json();
@@ -23,5 +25,15 @@ export async function POST(req: Request): Promise<NextResponse<IEventConfig | IE
   } catch (error) {
     return NextResponse.json({ error, description: 'Something went wrong' });
   }
+}
 
+export async function DELETE(req: NextRequest): Promise<NextResponse<{} | IError>> {
+  try {
+    await connectMongoose();
+    const entry = await req.json();
+    await EventConfig.deleteOne({ _id: entry._id }) 
+    return NextResponse.json({});
+  } catch (error) {
+    return NextResponse.json({ error, description: 'Something went wrong' });
+  }
 }

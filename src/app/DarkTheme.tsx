@@ -9,7 +9,7 @@ export default function DarkTheme({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', { defaultMatches: true });
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)', { defaultMatches: false });
 
   const theme = useMemo(
     () =>

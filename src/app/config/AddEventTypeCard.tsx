@@ -18,20 +18,31 @@ const save = async (data: IEventConfig) => {
   }
 };
 
-export default function AddEventTypeCard() {
+interface Props {
+  onSave: VoidFunction;
+}
+
+export default function AddEventTypeCard({ onSave }: Props) {
   const [form, setForm] = useState<IEventConfig>({
     name: '',
-    fields: [
-      { name: '', type: 'string' }
-    ],
+    fields: [{ name: '', type: 'string' }]
   });
+
+  const handleSave = async () => {
+    await save(form);
+    onSave();
+    setForm({
+      name: '',
+      fields: [{ name: '', type: 'string' }]
+    });
+  }
 
   return (
     <Box>
       <Card variant="outlined">
         <CardContent>
           <Box pb={2} component="form">
-            <Typography variant="h6" component="h6" gutterBottom>New Event Type</Typography>
+            <Typography variant="h5" component="h5" gutterBottom>Add new config</Typography>
             <TextField
               margin="normal"
               id="name"
@@ -52,7 +63,7 @@ export default function AddEventTypeCard() {
             ))}
           </Box>
           <Button
-            variant="contained"
+            variant="text"
             onClick={() => {
               form.fields.push({ name: '', type: 'string' });
               setForm({ ...form });
@@ -60,7 +71,11 @@ export default function AddEventTypeCard() {
           >Add New Field</Button>
         </CardContent>
         <CardActions>
-          <Button onClick={() => save(form)}>Add Event</Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleSave}
+          >Save</Button>
         </CardActions>
       </Card>
     </Box>

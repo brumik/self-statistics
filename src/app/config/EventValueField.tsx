@@ -1,11 +1,5 @@
 import { IEventConfigField } from "@/lib/models/EventConfig";
-import { Autocomplete, Stack, TextField } from "@mui/material";
-
-const typeOptions = [
-  { label: "Number", id: "number" },
-  { label: "String", id: "string" },
-  { label: "Boolean", id: "boolean" },
-];
+import { FormControl, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 
 interface Props {
   value: IEventConfigField
@@ -14,7 +8,7 @@ interface Props {
 
 export default function EventValueField({ value, onChange }: Props) {
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="column" spacing={1}>
       <TextField
         margin="dense"
         label="Value Name"
@@ -22,17 +16,19 @@ export default function EventValueField({ value, onChange }: Props) {
         value={value.name}
         onChange={(e) => onChange({ ...value, name: e.target.value })}
       />
-      <Autocomplete
-        disablePortal
-        sx={{ flexGrow: 1 }}
-        options={typeOptions}
-        value={typeOptions.find(({ id }) => id === value.type)}
-        onChange={(_, val) => onChange({ ...value, type: val?.id as IEventConfigField['type'] })}
-        renderInput={(params) => <TextField
-          {...params}
-          label="Event Type"
-        />}
-      />
+      <FormControl>
+        <InputLabel id="select-type-label">EventType</InputLabel>
+        <Select
+          value={value.type}
+          onChange={(e) => onChange({ ...value, type: e.target.value as IEventConfigField['type'] })}
+          label="EventType"
+          labelId="select-type-label"
+        >
+          <MenuItem value="number">Number</MenuItem>
+          <MenuItem value="string">Text</MenuItem>
+          <MenuItem value="boolean">Boolean</MenuItem>
+        </Select>
+      </FormControl>
     </Stack>
   );
 }
