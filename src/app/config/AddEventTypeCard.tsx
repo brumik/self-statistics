@@ -11,8 +11,7 @@ const save = async (data: IEventConfig) => {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    const result = await response.json() as IEventConfig;
-    console.log(result);
+    await response.json() as IEventConfig;
   } catch (error) {
     console.error(error);
   }
