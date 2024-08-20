@@ -4,7 +4,7 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
-import { CheckHealthEndpoint } from './api/check-connection/route';
+import { CheckHealthEndpoint } from '../api/check-connection/route';
 
 export default function ConnectionIndicatorButton() {
   const [connected, setConnected] = useState(false);

@@ -3,15 +3,17 @@
 import { Box, Button, Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
 import EventValueField from "./EventValueField";
 import { useState } from "react";
-import { IEventConfig, IEventConfigField } from "@/lib/models/EventConfig";
+import { IEventConfig, IEventConfigField, IEventConfigHydrated } from "@/lib/models/EventConfig";
 
-const save = async (data: IEventConfig) => {
+type IEventConfigForPost = Omit<IEventConfig, 'user'>;
+
+const save = async (data: IEventConfigForPost) => {
   try {
     const response = await fetch('/api/event-configs', {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    await response.json() as IEventConfig;
+    await response.json() as IEventConfigHydrated;
   } catch (error) {
     console.error(error);
   }
@@ -22,7 +24,7 @@ interface Props {
 }
 
 export default function AddEventTypeCard({ onSave }: Props) {
-  const [form, setForm] = useState<IEventConfig>({
+  const [form, setForm] = useState<IEventConfigForPost>({
     name: '',
     fields: [{ name: '', type: 'string' }]
   });

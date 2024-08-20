@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectMongoose } from '@/lib/mongoose';
 import { IError } from '../Types';
-import { Event, IEvent } from '@/lib/models/Event';
+import { Event, IEvent, IEventHydrated } from '@/lib/models/Event';
 import { HydratedDocument } from 'mongoose';
 import { getDataFromToken } from '@/app/helpers/decodeToken';
 
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<HydratedDo
   }
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse<HydratedDocument<IEvent> | IError>> {
+export async function POST(request: NextRequest): Promise<NextResponse<Omit<IEventHydrated, 'user'> | IError>> {
   try {
     await connectMongoose();
     const userId = await getDataFromToken(request);

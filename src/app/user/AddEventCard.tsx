@@ -1,6 +1,6 @@
 "use client"
 
-import { IEvent } from "@/lib/models/Event";
+import { IEvent, IEventHydrated } from "@/lib/models/Event";
 import { IEventConfig, IEventConfigField } from "@/lib/models/EventConfig";
 import {
   Box,
@@ -18,14 +18,21 @@ import {
 import { HydratedDocument } from "mongoose";
 import { useEffect, useState } from "react";
 
+interface Props {
+  onSave: VoidFunction;
+}
 
-const save = async (data: IEvent) => {
+interface IEventString extends Omit<IEvent, 'type' | 'user'> {
+  type: string
+}
+
+const save = async (data: Omit<IEvent, 'user'>) => {
   try {
     const response = await fetch('/api/events', {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    await response.json() as IEvent;
+    await response.json() as IEventHydrated;
   } catch (error) {
     console.error(error);
   }
@@ -38,14 +45,6 @@ const convertToType = (value: string, type: IEventConfigField['type']): string |
     case 'boolean': return !!value;
     default: return value;
   }
-}
-
-interface Props {
-  onSave: VoidFunction;
-}
-
-interface IEventString extends Omit<IEvent, 'type' | 'user'> {
-  type: string
 }
 
 export default function AddEventCard({ onSave }: Props) {
