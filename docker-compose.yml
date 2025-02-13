@@ -20,7 +20,7 @@ services:
     image: mongo
     # restart: always
     volumes:
-      - ./data:/data/db
+      - db:/data/db
     ports:
       - "27017:27017"
   web-prod:
@@ -33,3 +33,6 @@ services:
       - "3000:3000"
     depends_on:
       - mongo
+
+volumes:
+  db:
